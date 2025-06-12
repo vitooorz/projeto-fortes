@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Área da Cooperativa - RecicleBem</title>
+  <link href="https://fonts.googleapis.com/css2?family=Itim&family=Kanit&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+  margin: 0;
+  font-family: 'Itim', cursive;
+  background-color: #F2F2F2;
+  color: #1F3B20;
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #083030;
+  padding: 20px;
+  color: white;
+}
+
+.logo {
+  font-size: 24px;
+  font-family: 'Kanit', sans-serif;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  padding: 10px 0;
+  font-size: 16px;
+}
+
+.sidebar ul li a:hover {
+  background-color: #1F3B20;
+  padding-left: 10px;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+.kanit {
+  font-family: 'Kanit', sans-serif;
+}
+
+.subtitulo {
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+.cards {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background-color: white;
+  border: 1px solid #CCC;
+  padding: 15px;
+  border-radius: 8px;
+  width: 200px;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+}
+
+.btn.verde {
+  background-color: #083030;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Kanit', sans-serif;
+}
+
+.btn.verde:hover {
+  background-color: #1F3B20;
+}
+
+.lista-status li {
+  padding: 5px 0;
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <h2 class="logo">♻️ RecicleBem</h2>
+      <nav>
+        <ul>
+          <li><a href="colaborador-home.html">🏠 Home</a></li>
+          <li><a href="colaborador-lista.html">📃 Lista de ONGs</a></li>
+          <li><a href="colaborador-notificacoes.html">🔔 Notificações</a></li>
+          <li><a href="colaborador-conversa.html">💬 Conversas</a></li>
+          <li><a href="colaborador-coleta.html">🚛 Coleta</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <h1 class="kanit">Bem-vindo(a), Cooperativa!</h1>
+
+      <section class="section">
+        <h2 class="kanit subtitulo">Materiais disponíveis para coleta</h2>
+        <div class="cards">
+          <div class="card">
+            <h3>Papelão</h3>
+            <p>Quantidade: 12kg</p>
+            <p>Local: Centro - Vitória</p>
+            <button class="btn verde">Solicitar Coleta</button>
+          </div>
+          <div class="card">
+            <h3>Plástico</h3>
+            <p>Quantidade: 9kg</p>
+            <p>Local: Jardim Camburi</p>
+            <button class="btn verde">Solicitar Coleta</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2 class="kanit subtitulo">Acompanhamento de Solicitações</h2>
+        <ul class="lista-status">
+          <li>📦 Solicitação #102 - Em andamento</li>
+          <li>📦 Solicitação #101 - Finalizada</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+  <script>
+    
+function solicitarColeta(material) {
+  alert(`Coleta de ${material} solicitada com sucesso!`);
+}
+
+function carregarSolicitacoes() {
+  const lista = document.querySelector(".lista-status");
+  if (!lista) return;
+
+  const solicitacoes = [
+    { id: 104, status: "Pendente" },
+    { id: 103, status: "Em andamento" },
+    { id: 102, status: "Finalizada" }
+  ];
+
+  lista.innerHTML = ""; 
+  solicitacoes.forEach(s => {
+    const li = document.createElement("li");
+    li.textContent = `📦 Solicitação #${s.id} - ${s.status}`;
+    lista.appendChild(li);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  carregarSolicitacoes();
+
+  document.querySelectorAll(".btn.verde").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const material = btn.closest(".card").querySelector("h3").textContent;
+      solicitarColeta(material);
+    });
+  });
+});
+
+  </script>
+</body>
+</html>

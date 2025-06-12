@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tela de Conversas - Fortes Engenharia</title>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    display: flex;
+    background: #f5f5f5;
+  }
+  .sidebar {
+    width: 280px;
+    background: #2c3e50;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #34495e;
+  }
+  .sidebar-header {
+    padding: 20px;
+    font-size: 1.5em;
+    font-weight: bold;
+    border-bottom: 1px solid #34495e;
+  }
+  .conversations-list {
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+  .conversation-item {
+    padding: 15px 20px;
+    border-bottom: 1px solid #34495e;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .conversation-item:hover {
+    background: #34495e;
+  }
+  .conversation-item.active {
+    background: #1abc9c;
+    color: #fff;
+  }
+  .conversation-name {
+    font-weight: bold;
+  }
+  .conversation-last-msg {
+    font-size: 0.9em;
+    color: #bdc3c7;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .chat-area {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background: white;
+  }
+  .chat-header {
+    padding: 15px 20px;
+    background: #ecf0f1;
+    border-bottom: 1px solid #ddd;
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+  .messages {
+    flex-grow: 1;
+    padding: 15px 20px;
+    overflow-y: auto;
+    background: #f9f9f9;
+  }
+  .message {
+    margin-bottom: 12px;
+    max-width: 70%;
+    padding: 10px 14px;
+    border-radius: 15px;
+    clear: both;
+  }
+  .message.sent {
+    background: #1abc9c;
+    color: white;
+    margin-left: auto;
+    border-bottom-right-radius: 0;
+  }
+  .message.received {
+    background: #ecf0f1;
+    color: #333;
+    margin-right: auto;
+    border-bottom-left-radius: 0;
+  }
+  .chat-input-area {
+    padding: 10px 20px;
+    border-top: 1px solid #ddd;
+    display: flex;
+    background: #ecf0f1;
+  }
+  .chat-input-area input[type="text"] {
+    flex-grow: 1;
+    padding: 10px 14px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+  }
+  .chat-input-area button {
+    margin-left: 10px;
+    background: #1abc9c;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 1em;
+    padding: 0 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .chat-input-area button:hover {
+    background: #16a085;
+  }
+</style>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="sidebar-header">Conversas</div>
+    <div class="conversations-list" id="conversationsList">
+      <!-- Conversas vão aqui -->
+    </div>
+  </div>
+
+  <div class="chat-area">
+    <div class="chat-header" id="chatHeader">Selecione uma conversa</div>
+    <div class="messages" id="messages">
+      <!-- Mensagens vão aqui -->
+    </div>
+    <div class="chat-input-area" id="chatInputArea" style="display:none;">
+      <input type="text" id="messageInput" placeholder="Digite sua mensagem..." />
+      <button id="sendButton">Enviar</button>
+    </div>
+  </div>
+
+<script>
+  // Dados simulados de conversas e mensagens
+  const conversations = [
+    {
+      id: 1,
+      name: "Maria Silva",
+      messages: [
+        { text: "Oi, tudo bem?", sent: false, timestamp: "10:01" },
+        { text: "Tudo ótimo, e você?", sent: true, timestamp: "10:02" },
+        { text: "Também, obrigado!", sent: false, timestamp: "10:03" },
+      ],
+    },
+    {
+      id: 2,
+      name: "João Pereira",
+      messages: [
+        { text: "O relatório está pronto?", sent: true, timestamp: "09:15" },
+        { text: "Ainda não, vou terminar hoje.", sent: false, timestamp: "09:17" },
+      ],
+    },
+    {
+      id: 3,
+      name: "Equipe Fortes",
+      messages: [
+        { text: "Reunião às 14h.", sent: false, timestamp: "08:30" },
+        { text: "Confirmado!", sent: true, timestamp: "08:31" },
+      ],
+    },
+  ];
+
+  let currentConversationId = null;
+
+  const conversationsListEl = document.getElementById("conversationsList");
+  const chatHeaderEl = document.getElementById("chatHeader");
+  const messagesEl = document.getElementById("messages");
+  const chatInputAreaEl = document.getElementById("chatInputArea");
+  const messageInputEl = document.getElementById("messageInput");
+  const sendButtonEl = document.getElementById("sendButton");
+
+  function renderConversations() {
+    conversationsListEl.innerHTML = "";
+    conversations.forEach((conv) => {
+      const lastMsg = conv.messages.length > 0 ? conv.messages[conv.messages.length - 1].text : "";
+      const item = document.createElement("div");
+      item.classList.add("conversation-item");
+      if (conv.id === currentConversationId) item.classList.add("active");
+      item.dataset.id = conv.id;
+      item.innerHTML = `
+        <div class="conversation-name">${conv.name}</div>
+        <div class="conversation-last-msg">${lastMsg}</div>
+      `;
+      item.addEventListener("click", () => {
+        selectConversation(conv.id);
+      });
+      conversationsListEl.appendChild(item);
+    });
+  }
+
+  function renderMessages() {
+    const conversation = conversations.find(c => c.id === currentConversationId);
+    if (!conversation) return;
+
+    chatHeaderEl.textContent = conversation.name;
+    messagesEl.innerHTML = "";
+
+    conversation.messages.forEach(msg => {
+      const msgEl = document.createElement("div");
+      msgEl.classList.add("message");
+      msgEl.classList.add(msg.sent ? "sent" : "received");
+      msgEl.textContent = msg.text;
+      messagesEl.appendChild(msgEl);
+    });
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function selectConversation(id) {
+    currentConversationId = id;
+    renderConversations();
+    renderMessages();
+    chatInputAreaEl.style.display = "flex";
+    messageInputEl.focus();
+  }
+
+  sendButtonEl.addEventListener("click", () => {
+    sendMessage();
+  });
+
+  messageInputEl.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+
+  function sendMessage() {
+    const text = messageInputEl.value.trim();
+    if (!text) return;
+
+    const conversation = conversations.find(c => c.id === currentConversationId);
+    if (!conversation) return;
+
+    conversation.messages.push({ text, sent: true, timestamp: new Date().toLocaleTimeString().slice(0,5) });
+    messageInputEl.value = "";
+    renderConversations();
+    renderMessages();
+  }
+
+  // Inicializa a lista
+  renderConversations();
+</script>
+</body>
+</html>

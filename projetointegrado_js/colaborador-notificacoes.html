@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Área do Colaborador - Notificações</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Kanit', sans-serif;
+      background-color: #F2EFE9;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+
+    aside {
+      width: 220px;
+      background-color: #083030;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .logo {
+      padding: 16px;
+      background-color: #1F3B20;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .menu {
+      list-style: none;
+      padding: 0;
+    }
+
+    .menu li {
+      padding: 12px 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .menu li:hover {
+      background-color: #264D44;
+    }
+
+    .ativo {
+      background-color: #264D44;
+    }
+
+    main {
+      flex: 1;
+      padding: 24px;
+      overflow-y: auto;
+    }
+
+    header {
+      background-color: #0B3F08;
+      padding: 16px 24px;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .search-bar input {
+      padding: 6px 10px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    .notificacoes {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .notificacao {
+      background-color: white;
+      border-radius: 8px;
+      padding: 16px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .notificacao h4 {
+      margin: 0 0 6px 0;
+    }
+
+    .notificacao p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .notificacao .data {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #777;
+    }
+
+    .rodape {
+      padding: 12px;
+      text-align: center;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <aside>
+      <div>
+        <div class="logo">logo<br>60x50</div>
+        <ul class="menu">
+          <li onclick="goTo('colaborador-home.html')">🏠 Home</li>
+          <li onclick="goTo('colaborador-coleta.html')">🗺️ Coleta</li>
+          <li onclick="goTo('colaborador-lista.html')">📋 Lista</li>
+          <li onclick="goTo('colaborador-conversa.html')">💬 Conversas</li>
+        </ul>
+      </div>
+      <ul class="menu">
+        <li>⚙️ Configurações</li>
+        <li>❓ Ajuda</li>
+      </ul>
+    </aside>
+
+    <div style="flex: 1; display: flex; flex-direction: column;">
+      <header>
+        <div>Área do Colaborador</div>
+        <div class="search-bar">
+          🔍 <input type="text" placeholder="Buscar notificações"/>
+        </div>
+      </header>
+      <main>
+        <h2>Notificações</h2>
+        <div class="notificacoes">
+          <div class="notificacao">
+            <h4>📦 Coleta realizada com sucesso</h4>
+            <p>Sua coleta #002 foi concluída no dia 03/06/2025.</p>
+            <div class="data">Recebido em 03/06/2025 - 17:30</div>
+          </div>
+          <div class="notificacao">
+            <h4>🔔 Nova coleta agendada</h4>
+            <p>Você agendou uma nova coleta para o dia 05/06/2025.</p>
+            <div class="data">Recebido em 02/06/2025 - 10:15</div>
+          </div>
+          <div class="notificacao">
+            <h4>📩 Mensagem da cooperativa</h4>
+            <p>A cooperativa Nova Esperança enviou uma nova mensagem sobre o ponto de coleta.</p>
+            <div class="data">Recebido em 01/06/2025 - 14:20</div>
+          </div>
+        </div>
+      </main>
+      <div class="rodape">© 2025 Fortes Engenharia</div>
+    </div>
+  </div>
+
+  <script>
+    function goTo(pagina) {
+      window.location.href = pagina;
+    }
+  </script>
+</body>
+</html>
