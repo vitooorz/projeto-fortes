@@ -1,258 +1,397 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Tela de Conversas - Fortes Engenharia</title>
-<style>
-  * {
-    box-sizing: border-box;
-  }
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    height: 100vh;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Conversas - Fortes Engenharia</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      height: 100vh;
+      background: #f0f0f0;
+    }
+
+    /* MENU LATERAL */
+    .sidebar-menu {
+      width: 180px;
+      background-color: #003c3c;
+      color: white;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-area {
+      background-color: #1b3d1b;
+      text-align: center;
+      padding: 15px 0;
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 1.2;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      color: white;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .nav-item:hover {
+      background-color: #145a5a;
+    }
+
+    .nav-item.active {
+      background-color: #1b4d4d;
+    }
+
+    .nav-item img {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* CONTEÚDO PRINCIPAL */
+    .main-content {
+      flex-grow: 1;
+      display: flex;
+      height: 100vh;
+    }
+
+    .conversations-sidebar {
+      width: 260px;
+      background: #2c3e50;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid #34495e;
+    }
+
+    .conversations-sidebar h2 {
+      margin: 0;
+      padding: 20px;
+      font-size: 1.2em;
+      border-bottom: 1px solid #34495e;
+    }
+
+    .conversations-list {
+      overflow-y: auto;
+      flex-grow: 1;
+    }
+
+    .conversation-item {
+      padding: 12px 20px;
+      border-bottom: 1px solid #34495e;
+      cursor: pointer;
+    }
+
+    .conversation-item:hover {
+      background-color: #34495e;
+    }
+
+    .conversation-item.active {
+      background-color: #1abc9c;
+    }
+
+    .conversation-name {
+      font-weight: bold;
+    }
+
+    .conversation-last-msg {
+      font-size: 0.9em;
+      color: #bdc3c7;
+    }
+
+    .chat-area {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      background-color: white;
+    }
+
+    .chat-header {
+      padding: 15px 20px;
+      background-color: #ecf0f1;
+      border-bottom: 1px solid #ddd;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+
+    .messages {
+      flex-grow: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background: #f9f9f9;
+    }
+
+    .message {
+      max-width: 70%;
+      margin-bottom: 15px;
+      padding: 10px 15px;
+      border-radius: 15px;
+    }
+
+    .message.sent {
+      background-color: #1abc9c;
+      color: white;
+      margin-left: auto;
+      border-bottom-right-radius: 0;
+    }
+
+    .message.received {
+      background-color: #ecf0f1;
+      color: #333;
+      margin-right: auto;
+      border-bottom-left-radius: 0;
+    }
+
+    .chat-input {
+      padding: 15px 20px;
+      display: flex;
+      border-top: 1px solid #ddd;
+      background-color: #ecf0f1;
+    }
+
+    .chat-input input {
+      flex-grow: 1;
+      padding: 10px 15px;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+      outline: none;
+    }
+
+    .chat-input button {
+      margin-left: 10px;
+      padding: 10px 20px;
+      border-radius: 20px;
+      background-color: #1abc9c;
+      border: none;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .chat-input button:hover {
+      background-color: #16a085;
+    }
+
+  /* ... */
+  .sidebar-menu {
+    width: 220px;
+    background-color: #003c3c;
+    color: white;
     display: flex;
-    background: #f5f5f5;
+    flex-direction: column;
   }
-  .sidebar {
-    width: 280px;
+
+  .nav-item {
+    padding: 16px 24px;
+    font-size: 1rem;
+  }
+
+  .nav-item img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .main-content {
+    flex-grow: 1;
+    display: flex;
+    height: 100vh;
+  }
+
+  .conversations-sidebar {
+    width: 320px;
     background: #2c3e50;
     color: white;
     display: flex;
     flex-direction: column;
     border-right: 1px solid #34495e;
   }
-  .sidebar-header {
-    padding: 20px;
-    font-size: 1.5em;
-    font-weight: bold;
-    border-bottom: 1px solid #34495e;
+
+  .conversations-sidebar h2 {
+    padding: 24px;
+    font-size: 1.4em;
   }
-  .conversations-list {
-    flex-grow: 1;
-    overflow-y: auto;
-  }
+
   .conversation-item {
-    padding: 15px 20px;
-    border-bottom: 1px solid #34495e;
-    cursor: pointer;
-    transition: background 0.2s;
+    padding: 18px 24px;
+    font-size: 1rem;
   }
-  .conversation-item:hover {
-    background: #34495e;
-  }
-  .conversation-item.active {
-    background: #1abc9c;
-    color: #fff;
-  }
+
   .conversation-name {
     font-weight: bold;
+    font-size: 1.05em;
   }
+
   .conversation-last-msg {
-    font-size: 0.9em;
-    color: #bdc3c7;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-size: 0.95em;
   }
-  .chat-area {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    background: white;
-  }
+
   .chat-header {
-    padding: 15px 20px;
-    background: #ecf0f1;
-    border-bottom: 1px solid #ddd;
-    font-weight: bold;
-    font-size: 1.2em;
+    padding: 20px 30px;
+    font-size: 1.4em;
   }
+
   .messages {
-    flex-grow: 1;
-    padding: 15px 20px;
-    overflow-y: auto;
-    background: #f9f9f9;
+    padding: 24px 30px;
   }
+
   .message {
-    margin-bottom: 12px;
-    max-width: 70%;
-    padding: 10px 14px;
-    border-radius: 15px;
-    clear: both;
+    padding: 14px 20px;
+    font-size: 1.05em;
   }
-  .message.sent {
-    background: #1abc9c;
-    color: white;
-    margin-left: auto;
-    border-bottom-right-radius: 0;
+
+  .chat-input {
+    padding: 20px 30px;
   }
-  .message.received {
-    background: #ecf0f1;
-    color: #333;
-    margin-right: auto;
-    border-bottom-left-radius: 0;
-  }
-  .chat-input-area {
-    padding: 10px 20px;
-    border-top: 1px solid #ddd;
-    display: flex;
-    background: #ecf0f1;
-  }
-  .chat-input-area input[type="text"] {
-    flex-grow: 1;
-    padding: 10px 14px;
+
+  .chat-input input {
+    padding: 12px 18px;
     font-size: 1em;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    outline: none;
   }
-  .chat-input-area button {
-    margin-left: 10px;
-    background: #1abc9c;
-    border: none;
-    color: white;
-    font-weight: bold;
+
+  .chat-input button {
+    padding: 12px 24px;
     font-size: 1em;
-    padding: 0 20px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background 0.3s;
   }
-  .chat-input-area button:hover {
-    background: #16a085;
-  }
-</style>
+
+
+
+
+  </style>
 </head>
 <body>
-  <div class="sidebar">
-    <div class="sidebar-header">Conversas</div>
-    <div class="conversations-list" id="conversationsList">
-      <!-- Conversas vão aqui -->
+
+  <!-- MENU LATERAL -->
+  <div class="sidebar-menu">
+    <div class="logo-area">
+      logo<br>60x50
+    </div>
+    <a href="colaborador-home.html" class="nav-item"><img src="https://cdn-icons-png.flaticon.com/512/1946/1946436.png"><span>Home</span></a>
+    <a href="colaborador-coleta.html" class="nav-item"><img src="https://cdn-icons-png.flaticon.com/512/854/854878.png"><span>Coleta</span></a>
+    <a href="colaborador-lista.html" class="nav-item"><img src="https://cdn-icons-png.flaticon.com/512/84/84380.png"><span>Lista</span></a>
+    <a href="colaborador-lista.html" class="nav-item"><img src="https://cdn-icons-png.flaticon.com/512/1827/1827392.png"><span>Notificações</span></a>
+  </div>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <div class="main-content">
+    <!-- Lista de Conversas -->
+    <div class="conversations-sidebar">
+      <h2>Conversas</h2>
+      <div class="conversations-list" id="conversationsList"></div>
+    </div>
+
+    <!-- Área de Chat -->
+    <div class="chat-area">
+      <div class="chat-header" id="chatHeader">Selecione uma conversa</div>
+      <div class="messages" id="messages"></div>
+      <div class="chat-input" id="chatInputArea" style="display: none;">
+        <input type="text" id="messageInput" placeholder="Digite sua mensagem...">
+        <button id="sendButton">Enviar</button>
+      </div>
     </div>
   </div>
 
-  <div class="chat-area">
-    <div class="chat-header" id="chatHeader">Selecione uma conversa</div>
-    <div class="messages" id="messages">
-      <!-- Mensagens vão aqui -->
-    </div>
-    <div class="chat-input-area" id="chatInputArea" style="display:none;">
-      <input type="text" id="messageInput" placeholder="Digite sua mensagem..." />
-      <button id="sendButton">Enviar</button>
-    </div>
-  </div>
+  <script>
+    const conversations = [
+      {
+        id: 1,
+        name: "Maria Silva",
+        messages: [
+          { text: "Oi, tudo bem?", sent: false },
+          { text: "Tudo ótimo, e você?", sent: true },
+          { text: "Também, obrigado!", sent: false },
+        ],
+      },
+      {
+        id: 2,
+        name: "João Pereira",
+        messages: [
+          { text: "O relatório está pronto?", sent: true },
+          { text: "Ainda não, vou terminar hoje.", sent: false },
+        ],
+      },
+      {
+        id: 3,
+        name: "Equipe Fortes",
+        messages: [
+          { text: "Reunião às 14h.", sent: false },
+          { text: "Confirmado!", sent: true },
+        ],
+      },
+    ];
 
-<script>
-  // Dados simulados de conversas e mensagens
-  const conversations = [
-    {
-      id: 1,
-      name: "Maria Silva",
-      messages: [
-        { text: "Oi, tudo bem?", sent: false, timestamp: "10:01" },
-        { text: "Tudo ótimo, e você?", sent: true, timestamp: "10:02" },
-        { text: "Também, obrigado!", sent: false, timestamp: "10:03" },
-      ],
-    },
-    {
-      id: 2,
-      name: "João Pereira",
-      messages: [
-        { text: "O relatório está pronto?", sent: true, timestamp: "09:15" },
-        { text: "Ainda não, vou terminar hoje.", sent: false, timestamp: "09:17" },
-      ],
-    },
-    {
-      id: 3,
-      name: "Equipe Fortes",
-      messages: [
-        { text: "Reunião às 14h.", sent: false, timestamp: "08:30" },
-        { text: "Confirmado!", sent: true, timestamp: "08:31" },
-      ],
-    },
-  ];
+    let currentConversationId = null;
 
-  let currentConversationId = null;
+    const conversationsListEl = document.getElementById("conversationsList");
+    const chatHeaderEl = document.getElementById("chatHeader");
+    const messagesEl = document.getElementById("messages");
+    const chatInputEl = document.getElementById("chatInputArea");
+    const messageInput = document.getElementById("messageInput");
+    const sendButton = document.getElementById("sendButton");
 
-  const conversationsListEl = document.getElementById("conversationsList");
-  const chatHeaderEl = document.getElementById("chatHeader");
-  const messagesEl = document.getElementById("messages");
-  const chatInputAreaEl = document.getElementById("chatInputArea");
-  const messageInputEl = document.getElementById("messageInput");
-  const sendButtonEl = document.getElementById("sendButton");
-
-  function renderConversations() {
-    conversationsListEl.innerHTML = "";
-    conversations.forEach((conv) => {
-      const lastMsg = conv.messages.length > 0 ? conv.messages[conv.messages.length - 1].text : "";
-      const item = document.createElement("div");
-      item.classList.add("conversation-item");
-      if (conv.id === currentConversationId) item.classList.add("active");
-      item.dataset.id = conv.id;
-      item.innerHTML = `
-        <div class="conversation-name">${conv.name}</div>
-        <div class="conversation-last-msg">${lastMsg}</div>
-      `;
-      item.addEventListener("click", () => {
-        selectConversation(conv.id);
+    function renderConversations() {
+      conversationsListEl.innerHTML = "";
+      conversations.forEach(conv => {
+        const lastMsg = conv.messages.length > 0 ? conv.messages[conv.messages.length - 1].text : "";
+        const div = document.createElement("div");
+        div.className = "conversation-item" + (conv.id === currentConversationId ? " active" : "");
+        div.innerHTML = `
+          <div class="conversation-name">${conv.name}</div>
+          <div class="conversation-last-msg">${lastMsg}</div>
+        `;
+        div.onclick = () => selectConversation(conv.id);
+        conversationsListEl.appendChild(div);
       });
-      conversationsListEl.appendChild(item);
-    });
-  }
-
-  function renderMessages() {
-    const conversation = conversations.find(c => c.id === currentConversationId);
-    if (!conversation) return;
-
-    chatHeaderEl.textContent = conversation.name;
-    messagesEl.innerHTML = "";
-
-    conversation.messages.forEach(msg => {
-      const msgEl = document.createElement("div");
-      msgEl.classList.add("message");
-      msgEl.classList.add(msg.sent ? "sent" : "received");
-      msgEl.textContent = msg.text;
-      messagesEl.appendChild(msgEl);
-    });
-    messagesEl.scrollTop = messagesEl.scrollHeight;
-  }
-
-  function selectConversation(id) {
-    currentConversationId = id;
-    renderConversations();
-    renderMessages();
-    chatInputAreaEl.style.display = "flex";
-    messageInputEl.focus();
-  }
-
-  sendButtonEl.addEventListener("click", () => {
-    sendMessage();
-  });
-
-  messageInputEl.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      sendMessage();
     }
-  });
 
-  function sendMessage() {
-    const text = messageInputEl.value.trim();
-    if (!text) return;
+    function renderMessages() {
+      const conversation = conversations.find(c => c.id === currentConversationId);
+      if (!conversation) return;
+      messagesEl.innerHTML = "";
+      chatHeaderEl.textContent = conversation.name;
+      conversation.messages.forEach(msg => {
+        const div = document.createElement("div");
+        div.className = "message " + (msg.sent ? "sent" : "received");
+        div.textContent = msg.text;
+        messagesEl.appendChild(div);
+      });
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
 
-    const conversation = conversations.find(c => c.id === currentConversationId);
-    if (!conversation) return;
+    function selectConversation(id) {
+      currentConversationId = id;
+      renderConversations();
+      renderMessages();
+      chatInputEl.style.display = "flex";
+      messageInput.focus();
+    }
 
-    conversation.messages.push({ text, sent: true, timestamp: new Date().toLocaleTimeString().slice(0,5) });
-    messageInputEl.value = "";
+    function sendMessage() {
+      const text = messageInput.value.trim();
+      if (!text) return;
+      const conversation = conversations.find(c => c.id === currentConversationId);
+      conversation.messages.push({ text, sent: true });
+      messageInput.value = "";
+      renderMessages();
+      renderConversations();
+    }
+
+    sendButton.onclick = sendMessage;
+    messageInput.onkeydown = e => {
+      if (e.key === "Enter") sendMessage();
+    };
+
     renderConversations();
-    renderMessages();
-  }
+  </script>
 
-  // Inicializa a lista
-  renderConversations();
-</script>
 </body>
 </html>
