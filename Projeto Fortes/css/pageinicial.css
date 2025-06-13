@@ -1,0 +1,156 @@
+body {
+    background-color: #EFEFEF;
+    font-family: "Itim";
+    min-height: 100vh;
+}
+
+.titulos {
+    margin-top: 25px;
+}
+
+main {
+    background-color: #164343;
+}
+
+.caixaSimples {
+            border-radius: 10px;
+            border: solid 3px;
+            padding: 10px;
+            width: 350px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            flex-wrap: wrap align-items;
+            margin: 15px;
+        }
+
+.caixaSelecao {
+            width: 100px;
+        }
+
+
+@font-face {
+    font-family: 'Itim';
+    src: url('../fontes/Itim-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+#nome_marca{
+        color: white;
+        font-family: "Itim";
+        margin: 0;
+        }
+
+button {
+        background-color: #336633;
+        color: rgb(0, 0, 0);
+        padding: 10px 20px;
+        border: 2.5px solid;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        font-size: small;
+        transition: background-color 0.3s ease;
+        }
+
+button:hover {
+        background-color: #0056b3;
+        }
+
+#cabeçalho {
+    margin-top: 5px;
+}
+
+.message {
+        margin-top: 15px;
+        color: red;
+        }
+
+#ajuda {
+    margin: 0;
+    text-align: right;
+}
+
+.container {
+            width: 90%;
+            max-width: 600px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden; /* Garante que bordas arredondadas funcionem bem */
+        }
+
+        .botaoexpand {
+            margin-left: 25px;
+            background-color: #DACDBF;
+            color: rgb(0, 0, 0);
+            padding: 10px 12px;
+            width: 150px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            border: 2.5px solid;
+            transition: background-color 0.3s ease;
+            font-family: "Itim";
+        }
+
+        .botaoexpand:hover {
+            background-color: #878269;
+        }
+
+        /* Ícone de seta para indicar expansão/colapso */
+        .toggle-icon {
+            font-size: 1.2em;
+            transform: rotate(0deg); /* Posição inicial da seta */
+            transition: transform 0.3s ease;
+        }
+
+        /* Gira a seta quando a seção está aberta */
+        .botaoexpand.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .posexpand {
+            padding: 0 20px; /* Padding horizontal, vertical é 0 inicialmente */
+            max-height: 0; /* Começa com altura 0 para ficar escondido */
+            overflow: hidden; /* Esconde o conteúdo extra */
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out; /* Transição suave */
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Quando a seção está ativa, define uma altura máxima grande para mostrar o conteúdo */
+        .posexpand.active {
+            max-height: 500px; /* Um valor grande o suficiente para o seu conteúdo */
+            padding: 20px; /* Adiciona padding quando expandido */
+        }
+
+        .posexpand ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .posexpand li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .posexpand li:last-child {
+            border-bottom: none;
+        }
+
+#redessociais {
+    display: flex; 
+    font-size: 3rem;
+    justify-content: right;
+    margin-right: 100px;
+    margin-top: 100px;
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro RB</title>
+    <link rel="shortcut icon" href="../imagens/logo_favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/pagecriar.css">
+</head>
+<body>
+    <div class="cadastro-container">
+        <h2>Criar Nova Conta</h2>
+        <form id="cadastroForm">
+            <div class="form-group">
+                <label for="nome">Nome Completo:</label>
+                <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
+                <div class="error-message" id="nomeError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" placeholder="seuemail@exemplo.com" required>
+                <div class="error-message" id="emailError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha" placeholder="Mínimo 6 caracteres" required minlength="6">
+                <div class="error-message" id="senhaError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmaSenha">Confirmar Senha:</label>
+                <input type="password" id="confirmaSenha" name="confirmaSenha" placeholder="Repita sua senha" required>
+                <div class="error-message" id="confirmaSenhaError"></div>
+            </div>
+
+            <button type="submit">Cadastrar</button>
+            
+            <p class="login-link">Já tem uma conta? <a href="../paginas_variantes/pagina_login.html">Faça login aqui</a></p>
+        </form>
+    </div>
+
+    <script src="../jvs/pagecriar.js"></script>
+</body>
+</html>
